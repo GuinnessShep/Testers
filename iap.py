@@ -145,14 +145,16 @@ def generate_custom_values_from_apk(decompiled_dir):
     root = tree.getroot()
 
     package_name = root.attrib.get("package")
-    key1 = "your_key1"
-    value1 = "your_value1"
+    
+    custom_values = {}
+    
+    for element in root.iter():
+        if 'android:name' in element.attrib and 'android:value' in element.attrib:
+            key = element.attrib['android:name']
+            value = element.attrib['android:value']
+            custom_values[key] = value
 
-    return {
-        'key1': key1,
-        'value1': value1,
-        # Add more key-value pairs as needed
-    }
+    return custom_values
 
 def manipulate_local_storage(package_name, custom_values):
     jscode = """
