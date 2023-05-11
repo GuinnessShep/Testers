@@ -52,5 +52,42 @@ echo "Installing frida from source..."
 pip3 install cython
 pip3 install frida==14.2.18
 
+#!/bin/bash
+
+# Add required APT sources
+echo "Adding required APT sources..."
+echo "deb http://deb.debian.org/debian bullseye main" > /etc/apt/sources.list.d/bullseye.list
+echo "deb-src http://deb.debian.org/debian bullseye main" >> /etc/apt/sources.list.d/bullseye.list
+apt update
+
+# Install dependencies
+echo "Installing dependencies..."
+apt install -y build-essential python3 python3-pip wget default-jdk git
+
+# Install frida from source
+echo "Installing frida from source..."
+apt install -y automake autoconf libtool pkg-config
+git clone https://github.com/frida/frida.git
+cd frida
+make
+make install
+cd ..
+rm -rf frida
+
+# Install APKTool
+echo "Installing APKTool..."
+wget https://raw.githubusercontent.com/iBotPeaches/Apktool/master/scripts/linux/apktool -O /usr/local/bin/apktool
+chmod +x /usr/local/bin/apktool
+wget https://bitbucket.org/iBotPeaches/apktool/downloads/apktool_2.6.0.jar -O /usr/local/bin/apktool.jar
+
+# Install frida-tools from source
+echo "Installing frida-tools from source..."
+git clone https://github.com/frida/frida-tools.git
+cd frida-tools
+pip3 install .
+cd ..
+rm -rf frida-tools
+
 echo "Setup complete."
+
 
