@@ -1,4 +1,4 @@
- #!/bin/bash
+#!/bin/bash
 
 # Function to check if a command is available
 command_exists() {
@@ -19,6 +19,9 @@ if ! command_exists frida-deps-14.2.18.tar.xz; then
     export FRIDA_CORE_DEVKIT=$(pwd)/frida-deps-14.2.18
 
     echo "Frida core devkit installed."
+else
+    echo "Frida core devkit found."
+    export FRIDA_CORE_DEVKIT=$(pwd)/frida-deps-14.2.18
 fi
 
 # Install dependencies
@@ -47,6 +50,7 @@ source ~/.bashrc
 # Install frida from source
 echo "Installing frida from source..."
 pip3 install cython
-pip3 install git+https://github.com/frida/frida-python.git@14.2.18
+pip3 install frida==14.2.18
 
 echo "Setup complete."
+
